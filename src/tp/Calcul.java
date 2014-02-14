@@ -39,13 +39,14 @@ public class Calcul {
 
             //somme de 0 a� a : 1+2+3+...+a
             public void run(){
-
+            	resultA = sommeA(a);
             }
         };
 
         ////somme de 0 à b : 1+2+3+...+b
         Thread t2 = new Thread(){
             public void run(){
+            	resultB = sommeB(b);
 
             }
         };
@@ -57,7 +58,8 @@ public class Calcul {
         return (resultA+resultB)/2;
     }
 
-    public int halfSuiteWithWait(final int a, final int b) throws InterruptedException {
+    
+	public int halfSuiteWithWait(final int a, final int b) throws InterruptedException {
 
 
         resultA=0;
@@ -67,11 +69,10 @@ public class Calcul {
 
         Thread t1 = new Thread(){
 
-
             public void run(){
 
-
                 //somme de 0 à a : 1+2+3+...+a
+            	resultA = sommeA(a);
 
                 synchronized (lock){
 
@@ -90,7 +91,8 @@ public class Calcul {
         Thread t2 = new Thread(){
             public void run(){
                 //somme de 0 à b : 1+2+3+...+b
-
+            	resultB = sommeB(b);
+            	
                 synchronized (lock){
 
                     if (resultA>0){
@@ -188,6 +190,19 @@ public class Calcul {
         return 0;
 
 
+    }
+    
+    protected int sommeA(int a) {
+    	int result = 0;
+    	for (int i = 0; i<=a; i++) {
+    		result += i;
+    	}
+    	return result;
+		
+	}
+    
+    public int sommeB(int b) {
+    	return b*(b+1)/2;
     }
 
 
